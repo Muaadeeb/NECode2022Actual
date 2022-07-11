@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Business.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using ViewModels;
 
 namespace Business.Managers
@@ -51,14 +52,23 @@ namespace Business.Managers
 
 		}
 
-		public Task<AutoVM> GetAsync(int id)
+		public async Task<AutoVM> GetAsync(int id)
 		{
-			throw new NotImplementedException();
+			var autoInfo = await _context.Autos.FirstOrDefaultAsync((x => x.Id == id));
+
+			if (autoInfo == null)
+			{
+				//return new();
+				return null!;
+			}
+
+			return _mapper.Map<Auto, AutoVM>(autoInfo);
+
 		}
 
-		public Task<IEnumerable<AutoVM>> GetAllAsync()
+		public async Task<IEnumerable<AutoVM>> GetAllAsync()
 		{
-			throw new NotImplementedException();
+			return _mapper.Map<IEnumerable<Auto>, IEnumerable<AutoVM>>(await _context.Autos.ToListAsync());
 		}
 	}
 }

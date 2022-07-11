@@ -1,5 +1,104 @@
-﻿<h3>AutoList</h3>
+﻿@page "/auto-list"
+
+@inject IAutoManager _autoManager
+@inject NavigationManager _navigationManager
+@inject IDialogService _dialogService
+
+<div class="row mt-4">
+    <div class="col" style="margin-bottom: 2rem;">
+        <h4 class="card-title text-info">My Library 
+               <MudButton Href="@($"auto/create")" Variant="Variant.Filled" Style="float: right;" Color="Color.Primary">        
+                   <MudTooltip Text="Add">Add an Auto</MudTooltip>
+               </MudButton>
+        </h4>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col-12">
+        <MudTable Items="@Autos" class="table table-bordered table-hover">
+            <HeaderContent>
+                <MudTh>Id</MudTh>
+                <MudTh>Make</MudTh>
+                <MudTh>Model</MudTh>
+                <MudTh>Year</MudTh>
+                <MudTh>Doors</MudTh>               
+                <MudTh>IsAutomatic</MudTh>
+                <MudTh>IsElectric</MudTh>
+                <MudTh>FuelEfficiencyCity</MudTh>
+                <MudTh>FuelEfficiencyHwy</MudTh>
+                <MudTh>ExteriorColor</MudTh>
+                <MudTh>InteriorColor</MudTh>
+                <MudTh>Engine</MudTh>
+                <MudTh>DriveTrain</MudTh>
+                <MudTh>Price</MudTh>
+                <MudTh>Edit</MudTh>
+                <MudTh>Delete</MudTh>
+            </HeaderContent>
+      <RowTemplate>
+        <MudTd DataLabel="Id">@context.Id</MudTd>
+        <MudTd DataLabel="Make">@context.Make</MudTd>
+        <MudTd DataLabel="Model">@context.Model</MudTd>
+        <MudTd DataLabel="Year">@context.Year</MudTd>
+        <MudTd DataLabel="Doors">@context.Doors</MudTd>
+        <MudTd DataLabel="IsAutomatic">@context.IsAutomatic</MudTd>
+        <MudTd DataLabel="IsElectric">@context.IsElectric</MudTd>
+        <MudTd DataLabel="FuelEfficiencyCity">@context.FuelEfficiencyCity</MudTd>
+        <MudTd DataLabel="FuelEfficiencyHwy">@context.FuelEfficiencyHwy</MudTd>
+        <MudTd DataLabel="ExteriorColor">@context.ExteriorColor</MudTd>
+        <MudTd DataLabel="InteriorColor">@context.InteriorColor</MudTd>
+        <MudTd DataLabel="Engine">@context.Engine</MudTd>
+        <MudTd DataLabel="DriveTrain">@context.DriveTrain</MudTd>
+        <MudTd DataLabel="Price">@context.Price</MudTd>
+        <MudTd>
+             <MudTooltip Text="Edit">
+                  <MudFab Href="@($"auto/edit/{@context.Id}")" Color="Color.Secondary" StartIcon="@Icons.Material.Filled.Edit" Size="Size.Small"/>
+             </MudTooltip>
+        </MudTd>
+        <MudTd>
+            <MudTooltip Text="Delete">
+                <MudIconButton @onclick="()=> ShowDeleteWarningMessage(context.Id)" Icon="@Icons.Material.Filled.Delete" Variant="Variant.Filled" Color="Color.Primary" Size="Size.Medium"/>
+            </MudTooltip>
+         </MudTd>  
+    </RowTemplate>
+        </MudTable>
+    </div>
+</div>
 
 @code {
 
+    public IEnumerable<AutoVM> Autos { get; set; } = new List<AutoVM>();
+    private int? DeleteId { get; set; } = null;
+    private bool IsProcessing { get; set; } = false;
+
+    protected override async Task OnInitializedAsync()
+    {
+        Autos = await _autoManager.GetAllAsync();
+    }
+
+    private async void ShowDeleteWarningMessage(int id)
+    {
+        bool? result = await _dialogService.ShowMessageBox(
+            "Warning", 
+            "Deleting can not be undone!", 
+            yesText:"Delete!", cancelText:"Cancel");
+
+        await DeleteAsync(id);
+
+        StateHasChanged();
+    }
+
+    public async Task DeleteAsync(int id)
+    {
+        DeleteId = id;
+        IsProcessing = true;
+
+        if (DeleteId != null)
+        {
+            await _autoManager.DeleteAsync(DeleteId.Value);
+            Autos = await _autoManager.GetAllAsync();
+        }
+
+        IsProcessing = false;
+    }
 }

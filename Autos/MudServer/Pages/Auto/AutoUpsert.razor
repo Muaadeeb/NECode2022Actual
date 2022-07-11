@@ -1,5 +1,110 @@
-﻿<h3>AutoUpsert</h3>
+﻿@page "/auto/create"
+@page "/auto/edit/{Id:int}"
+
+@inject IAutoManager _autoManager
+@inject NavigationManager _navigationManager
+
+
+<div class="row mt-2 mb-5">
+    <h3 class="card-title text-info mb-3 ml-3">@Title Auto</h3>
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <EditForm Model="@AutoVM" OnValidSubmit="HandleUpsert">
+                    <DataAnnotationsValidator></DataAnnotationsValidator>
+                    <MudGrid>
+                        <MudItem xs="12" sm="7">
+                            <MudCard>
+                                <MudCardContent>
+                                    <MudTextField Label="Make" HelperText="Make of the auto(Ford...)" @bind-Value="AutoVM.Make" For="@(() => AutoVM.Make)"/>
+                                    <MudTextField Label="Model" HelperText="Model of the auto(F150, Bronco...)" @bind-Value="AutoVM.Model" For="@(() => AutoVM.Model)"/>
+                                    <MudNumericField Label="Year" HelperText="Enter the year" @bind-Value="AutoVM.Year" For="@(() => AutoVM.Year)"/>
+                                    <MudNumericField Label="Doors" HelperText="How many doors?" @bind-Value="AutoVM.Doors" For="@(() => AutoVM.Doors)"/>
+                                    <MudCheckBox Label="IsAutomatic" @bind-Checked="AutoVM.IsAutomatic" For="@(() => AutoVM.IsAutomatic)"/>
+                                    <MudCheckBox Label="IsElectric"  @bind-Checked="AutoVM.IsElectric" For="@(() => AutoVM.IsElectric)"/>
+                                    <MudNumericField Label="FuelEfficiencyCity" HelperText="City Range" @bind-Value="AutoVM.FuelEfficiencyCity" For="@(() => AutoVM.FuelEfficiencyCity)"/>
+                                    <MudNumericField Label="FuelEfficiencyHwy" HelperText="Highway Range" @bind-Value="AutoVM.FuelEfficiencyHwy" For="@(() => AutoVM.FuelEfficiencyHwy)"/>
+                                    <MudTextField Label="ExteriorColor" HelperText="ExteriorColor" @bind-Value="AutoVM.ExteriorColor" For="@(() => AutoVM.ExteriorColor)"/>
+                                    <MudTextField Label="InteriorColor" HelperText="InteriorColor" @bind-Value="AutoVM.InteriorColor" For="@(() => AutoVM.InteriorColor)"/>
+                                    <MudTextField Label="Engine" HelperText="" @bind-Value="AutoVM.Engine" For="@(() => AutoVM.Engine)"/>
+                                    <MudTextField Label="DriveTrain" HelperText="DriveTrain" @bind-Value="AutoVM.DriveTrain" For="@(() => AutoVM.DriveTrain)"/>
+                                    <MudNumericField Label="Price" HelperText="Price" @bind-Value="AutoVM.Price" Min="0.0" For="@(() => AutoVM.Price)"/>
+                                </MudCardContent>
+                                <MudCardActions>
+@*                                   <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary" Class="ml-auto">Register</MudButton>
+*@                                 <MudTooltip Text="Save">
+                                      <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Save" Color="Color.Info"  Size="Size.Small">Save</MudButton>
+                                   </MudTooltip>
+                                </MudCardActions>
+                            </MudCard>
+                        </MudItem>
+                    </MudGrid>
+                </EditForm>
+            </div>
+        </div>
+    </div>
+</div>
 
 @code {
 
+    [Parameter]
+    public int? Id { get; set; }
+
+    private AutoVM AutoVM { get; set; } = new AutoVM();
+    private string Title { get; set; } = "Add a ";
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (Id != null)
+        {
+            Title = "Update";
+            var id = Id.Value;
+            AutoVM = await _autoManager.GetAsync(id);
+
+        }
+        else
+        {
+            Title = "Add a ";
+            AutoVM = new();
+        }
+    }
+
+
+    private async Task HandleUpsert()
+    {
+        try
+        {
+            if (AutoVM.Id != 0 && Title == "Update")
+            {
+                var updateResult = await _autoManager.UpdateAsync(AutoVM);
+
+                if (updateResult != null)
+                {
+
+                }
+                else
+                {
+                    
+                }
+            }
+            else
+            {
+                var createdResult = await _autoManager.CreateAsync(AutoVM);
+                if (createdResult != null)
+                {
+
+                }
+                else
+                {
+                    
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            throw new Exception($"Whoops! Location: HandleUpsert -> {ex.Message}");
+        }
+
+        _navigationManager.NavigateTo("auto-list");
+    }
 }
