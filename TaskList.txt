@@ -110,6 +110,21 @@ Business
 -----------------------
 MudServer
 -----------------------
-DI for interface & automapper.
-Add to global usings.
+37). DI for interface & automapper.
+38). Add to global usings.
+
+
+-----------------------
+MudServer - UI Build
+-----------------------
+39). Add Auto folder
+40). Add Razor Components - AutoList.razor and AutoUpsert.razor
+41). Add in logic for page autoList
+42). Add in logic for page autoUpsert.
+43). Add in routein shared/navmenu
+
+Run application.
+Show validation errors.
+walk through all steps.
+
 
