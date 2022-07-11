@@ -1,0 +1,109 @@
+-----------------------
+Getting Started - GutHub
+-----------------------
+
+1). GitHub - Login and Create Repo.  .gitignore VS Studio template
+2). Clone Repo locally.
+3). Open readme and enter "Initial Commit" 
+
+-----------------------
+Get Started - VS
+-----------------------
+4). VS - Continue without Code.
+5). Web - Mudblazor - get started. dotnet new --install MudBlazor.Templates (Tools/NuGet Package Manager).
+
+6). Create New Project  File/New/Project - Mudblazor
+7). Organize Solution Explorer - move Mudserver into UI folder. (0-SolutionItems, 1-UI, 2-Business, 3-DataAccess, 4-Common)
+8). Default Project creations. (Business/DataAccess) - same as above.
+
+-----------------------
+9).Data Access
+-----------------------
+10). Create Data Folder.
+11). NuGuts:
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.6" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.6">
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.6" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.6">
+12). Global Usings.
+	global using System.ComponentModel.DataAnnotations;
+	global using Microsoft.EntityFrameworkCore;
+
+13). Cretae ApplicationDbContext
+14). Create Auto data model.
+
+
+-----------------------
+MudServer - DB Setup
+-----------------------
+15). appsettings.json / Sql Server Object Explorer
+((beware of auto-formatting)).
+Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=NECode2022;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False
+
+16). Install NuGets
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.6" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.6">
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.6" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.6">
+	
+17). Add GlobalUsings
+18). Add Dependencies- Business and Data Access
+19). program.cs - add dbcontext for defaultConnection.
+
+-----------------------
+DataAccess - Migrations
+-----------------------
+20. Run the migrations
+	// Code First:
+	// 1). add-migration initialCommit
+	// 2). update-database
+	
+
+-----------------------
+Common - VM
+-----------------------
+21). Create project ViewModels.
+22). Create class AutoVM - copy/paste from dataccess/Auto
+23). Add in data annotations - validations.
+24). Add in Price - to VM
+25). Add price to Dataaccess auto.cs
+26). add-migration addPrice.
+27). update-database
+
+
+-----------------------
+Business 
+-----------------------
+28). Interface and Manager folder
+29). Create the IAutoManager and AutoManager Interface/Class.
+30). Populate the interface:
+	public interface IAutoManager
+	{
+		public Task<AutoVM> CreateAsync(AutoVM obj);
+		public Task<AutoVM> UpdateAsync(AutoVM obj);
+		public Task<int> DeleteAsync(int id);
+		public Task<AutoVM> GetAsync(int id);
+		public Task<IEnumerable<AutoVM>> GetAllAsync();
+	}
+	
+31). Auto implement missing members in Manager.
+
+
+-----------------------
+Automapper
+-----------------------
+32). NuGets
+	Business - 
+		<PackageReference Include="AutoMapper" Version="11.0.1" />
+	Mudserver
+		<PackageReference Include="AutoMapper" Version="11.0.1" />
+		<PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
+33). Add Mapper Folder to business
+34). Add MappingProfile.cs
+35). Add GlobalUsing
+
+-----------------------
+Business 
+-----------------------
+36). Add methods for Create, Update, delete, get and getall.
+

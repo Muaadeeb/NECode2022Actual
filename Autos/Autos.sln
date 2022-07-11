@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.2.32526.322
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MudServer", "MudServer\MudServer.csproj", "{DB0F5DA9-71E3-4983-AEC0-02DA6EDA3295}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MudServer", "MudServer\MudServer.csproj", "{DB0F5DA9-71E3-4983-AEC0-02DA6EDA3295}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "0-SolutionItems", "0-SolutionItems", "{4F37C61B-851F-49CD-8980-EE724F506E33}"
 EndProject
@@ -15,9 +15,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3-DataAccess", "3-DataAcces
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4-Common", "4-Common", "{ECDBEB4A-64DB-4BD8-8448-2D5B7A294DB2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Business", "Business\Business.csproj", "{2E903DB4-F7A9-4245-961C-97AB6E54770E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Business", "Business\Business.csproj", "{2E903DB4-F7A9-4245-961C-97AB6E54770E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataAccess", "DataAccess\DataAccess.csproj", "{7D8EBD86-A3DD-4757-AEA4-30BE5E31263E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataAccess", "DataAccess\DataAccess.csproj", "{7D8EBD86-A3DD-4757-AEA4-30BE5E31263E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ViewModels", "ViewModels\ViewModels.csproj", "{EEB8AF76-6E07-4945-8365-ABB1DB0B9D10}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -37,6 +39,10 @@ Global
 		{7D8EBD86-A3DD-4757-AEA4-30BE5E31263E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7D8EBD86-A3DD-4757-AEA4-30BE5E31263E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7D8EBD86-A3DD-4757-AEA4-30BE5E31263E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EEB8AF76-6E07-4945-8365-ABB1DB0B9D10}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EEB8AF76-6E07-4945-8365-ABB1DB0B9D10}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EEB8AF76-6E07-4945-8365-ABB1DB0B9D10}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EEB8AF76-6E07-4945-8365-ABB1DB0B9D10}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -45,6 +51,7 @@ Global
 		{DB0F5DA9-71E3-4983-AEC0-02DA6EDA3295} = {4CBE5E64-156F-4DCA-8284-30C906FBBBC1}
 		{2E903DB4-F7A9-4245-961C-97AB6E54770E} = {E47A5A58-2E55-4E43-A272-B863002A7C81}
 		{7D8EBD86-A3DD-4757-AEA4-30BE5E31263E} = {B238F336-E284-499C-8E73-4ACEA2D9C7E5}
+		{EEB8AF76-6E07-4945-8365-ABB1DB0B9D10} = {ECDBEB4A-64DB-4BD8-8448-2D5B7A294DB2}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {91FFB55C-1FF0-4092-94E7-5A9940EB966B}
