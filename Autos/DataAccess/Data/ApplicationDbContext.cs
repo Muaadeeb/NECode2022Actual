@@ -1,6 +1,9 @@
-﻿namespace DataAccess.Data
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+
+namespace DataAccess.Data
 {
-	public class ApplicationDbContext : DbContext
+	//public class ApplicationDbContext : DbContext
+	public class ApplicationDbContext : IdentityDbContext
 	{
 		// Code First:
 		// 1). add-migration initialCommit
