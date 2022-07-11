@@ -107,3 +107,9 @@ Business
 -----------------------
 36). Add methods for Create, Update, delete, get and getall.
 
+-----------------------
+MudServer
+-----------------------
+DI for interface & automapper.
+Add to global usings.
+
