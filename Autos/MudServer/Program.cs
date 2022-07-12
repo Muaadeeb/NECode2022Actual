@@ -8,8 +8,14 @@ var builder = WebApplication.CreateBuilder(args);
 //builder.Services.AddDbContext<ApplicationDbContext>(options =>
 //    options.UseSqlServer(connectionString));;
 
-builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-    .AddEntityFrameworkStores<ApplicationDbContext>();;
+
+// If we are using default identity the below works great. 
+//builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+//    .AddEntityFrameworkStores<ApplicationDbContext>();
+
+// Since we are now going to be adding roles we need to change the default identity.
+builder.Services.AddIdentity<IdentityUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true)
+	.AddEntityFrameworkStores<ApplicationDbContext>();
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 	options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
@@ -41,6 +47,7 @@ app.UseRouting();
 
 app.MapBlazorHub();
 app.MapFallbackToPage("/_Host");
-app.UseAuthentication();;
+app.UseAuthentication();
+app.UseAuthorization();
 
 app.Run();

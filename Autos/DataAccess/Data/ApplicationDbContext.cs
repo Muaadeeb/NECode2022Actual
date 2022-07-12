@@ -15,6 +15,6 @@ namespace DataAccess.Data
 		}
 
 		public DbSet<Auto> Autos { get; set; } = null!;
-
+		public DbSet<ApplicationUser> ApplicationUsers { get; set; } = null!;
 	}
 }

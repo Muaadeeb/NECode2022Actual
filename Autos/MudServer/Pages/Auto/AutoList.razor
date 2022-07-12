@@ -4,6 +4,9 @@
 @inject NavigationManager _navigationManager
 @inject IDialogService _dialogService
 
+@*Be sure to add AuthorizeRouteView in App.razor*@
+@attribute [Authorize] 
+
 <div class="row mt-4">
     <div class="col" style="margin-bottom: 2rem;">
         <h4 class="card-title text-info">My Library 
@@ -71,10 +74,26 @@
     private int? DeleteId { get; set; } = null;
     private bool IsProcessing { get; set; } = false;
 
+    //Enchanced authorization.
+    //[CascadingParameter]
+    //public Task<AuthenticationState> AuthenticationState { get; set; }
+
     protected override async Task OnInitializedAsync()
     {
         Autos = await _autoManager.GetAllAsync();
     }
+
+    // Enchanced authorization.
+    //protected override async Task OnInitializedAsync()
+    //{
+    //    var authState = await AuthenticationState;
+    //    if (!authState.User.Identity.IsAuthenticated)
+    //    {
+    //        var uri = new Uri(_navigationManager.Uri);
+    //        _navigationManager.NavigateTo($"/identity/account/login?returnUrl={uri.LocalPath}", forceLoad:true);
+    //    }
+    //}
+
 
     private async void ShowDeleteWarningMessage(int id)
     {
