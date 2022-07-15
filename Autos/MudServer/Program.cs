@@ -6,22 +6,20 @@ using MudServer.Services.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Auto Added by Identity Scaffolding.  We are not using this because we already had an exisiting project with the connection string defined.
-//var connectionString = builder.Configuration.GetConnectionString("ApplicationDbContextConnection") ?? throw new InvalidOperationException("Connection string 'ApplicationDbContextConnection' not found.");
-//builder.Services.AddDbContext<ApplicationDbContext>(options =>
-//    options.UseSqlServer(connectionString));;
-
-
-// If we are using default identity the below works great. 
-builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-	.AddEntityFrameworkStores<ApplicationDbContext>();
-
-//// Since we are now going to be adding roles we need to change the default identity.
-//builder.Services.AddIdentity<IdentityUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true)
-//	.AddEntityFrameworkStores<ApplicationDbContext>();
-
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 	options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+// This is for identity user without roles
+//builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+//	.AddEntityFrameworkStores<ApplicationDbContext>();
+
+// This is for identity user and roles
+builder.Services.AddIdentity<IdentityUser, IdentityRole>()
+	.AddDefaultTokenProviders()
+	.AddDefaultUI()
+	.AddEntityFrameworkStores<ApplicationDbContext>();
+
+
 
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddScoped<IAutoManager, AutoManager>();

@@ -5,7 +5,12 @@
 @inject IDialogService _dialogService
 
 @*Be sure to add AuthorizeRouteView in App.razor*@
-@attribute [Authorize] 
+@*@attribute [Authorize] *@
+@attribute [Authorize(Roles=GlobalConst.RoleAdmin)] 
+
+<div>
+    My Role is: @MyRole
+</div>
 
 <div class="row mt-4">
     <div class="col" style="margin-bottom: 2rem;">
@@ -73,27 +78,27 @@
     public IEnumerable<AutoVM> Autos { get; set; } = new List<AutoVM>();
     private int? DeleteId { get; set; } = null;
     private bool IsProcessing { get; set; } = false;
+    public string MyRole { get; set; } = null!;
 
-    //Enchanced authorization.
-    //[CascadingParameter]
-    //public Task<AuthenticationState> AuthenticationState { get; set; }
+
+    [CascadingParameter]
+    public Task<AuthenticationState> AuthenticationState { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
+        var authState = await AuthenticationState;
+        if (!authState.User.Identity!.IsAuthenticated)
+        {
+            var uri = new Uri(_navigationManager.Uri);
+            _navigationManager.NavigateTo($"/identity/account/login?returnUrl={uri.LocalPath}", forceLoad:true);
+        }
+
+        MyRole = authState.User.IsInRole(GlobalConst.RoleAdmin) 
+            ? GlobalConst.RoleAdmin : GlobalConst.RoleCustomer;
+        
+
         Autos = await _autoManager.GetAllAsync();
     }
-
-    // Enchanced authorization.
-    //protected override async Task OnInitializedAsync()
-    //{
-    //    var authState = await AuthenticationState;
-    //    if (!authState.User.Identity.IsAuthenticated)
-    //    {
-    //        var uri = new Uri(_navigationManager.Uri);
-    //        _navigationManager.NavigateTo($"/identity/account/login?returnUrl={uri.LocalPath}", forceLoad:true);
-    //    }
-    //}
-
 
     private async void ShowDeleteWarningMessage(int id)
     {

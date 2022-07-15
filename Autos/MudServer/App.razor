@@ -3,7 +3,7 @@
         <Found Context="routeData">
             @*<RouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)" />*@
             <AuthorizeRouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)">
-                <NotAuthorized>You are not authorized - Tim!  Perhpas we should make a component page here?</NotAuthorized>
+                <NotAuthorized>You are not authorized - Tim!  Perhaps we should make a component page here?</NotAuthorized>
             </AuthorizeRouteView>
             <FocusOnNavigate RouteData="@routeData" Selector="h1"></FocusOnNavigate>
         </Found>
