@@ -19,8 +19,6 @@ builder.Services.AddIdentity<IdentityUser, IdentityRole>()
 	.AddDefaultUI()
 	.AddEntityFrameworkStores<ApplicationDbContext>();
 
-
-
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddScoped<IAutoManager, AutoManager>();
 builder.Services.AddScoped<IAzureDbService, AzureDbService>();

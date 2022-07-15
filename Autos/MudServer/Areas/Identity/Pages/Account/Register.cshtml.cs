@@ -131,7 +131,7 @@ namespace MudServer.Areas.Identity.Pages.Account
 
                 if (result.Succeeded)
                 {
-                    // TJI - Anytime a new user is registered automatically assign them Admin role.
+                    // TJI - Anytime a new user is registered automatically assign them a role.
                     if (user.Email == GlobalConst.AdminUser)
                     {
 	                    await _userManager.AddToRoleAsync(user, GlobalConst.RoleAdmin);
